@@ -16,7 +16,9 @@ import json
 # Önceden eğitilmiş model ismi
 pretrained_model_name = "jinaai/jina-colbert-v2"
 index_path = "/home/ec2-user/pyton-projects/jina-colbert-v2/"
-RAG = RAGPretrainedModel.from_pretrained(pretrained_model_name,index_root=index_path)
+
+# first_load = RAGPretrainedModel.from_pretrained(pretrained_model_name,index_root=index_path)
+
 # Kaydetmek istediğin modelin path'i
 
 app = Flask(__name__)
@@ -26,14 +28,30 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # 16 MB
 
 print("Model loaded successfully.")
 
-# İndeksleme isteği modeli
-class IndexRequest(BaseModel):
-    full_document: str
-    document_id: str
-    metadata: dict
-    index_name: str
-    max_document_length: int = 4096
-    # split_documents: bool
+from collections import OrderedDict
+
+# LRU Cache oluşturmak için sınıf
+class ModelCache:
+    def __init__(self, max_size=3):
+        self.cache = OrderedDict()
+        self.max_size = max_size
+
+    def get_model(self, index_name, index_path):
+        # Eğer model cache'de varsa, cache'in en başına al
+        if index_name in self.cache:
+            self.cache.move_to_end(index_name)
+            return self.cache[index_name]
+        else:
+            # Yeni model yükle ve cache'e ekle
+            model = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            self.cache[index_name] = model
+            # Cache boyutu limiti aşıldıysa en eski modeli sil
+            if len(self.cache) > self.max_size:
+                self.cache.popitem(last=False)
+            return model
+# ModelCache sınıfı ile cache yönetimi
+model_cache = ModelCache(max_size=25)  # Aynı anda maksimum 3 model saklanacak
+
 
 # İndeksleme endpoint'i
 @app.route("/index", methods=["POST"])
@@ -54,78 +72,46 @@ def index_document():
         if not data.get("index_name"):
             raise ValueError("index_name field is required.")
 
-
+   
         metadata = data.get("metadata")
         print(f"Metadata length: {len(metadata)}")
-        # index_request = IndexRequest(**data)
         full_document = data.get("full_document")
         document_ids = data.get("document_id")
+        deleted_document_id = data.get("deleted_document_id")
+        index_name = data.get("index_name")
         # document_ids = [tuple(doc_id) if isinstance(doc_id, list) else doc_id for doc_id in data.get("document_id")]
 
         # Uzunluklarını kontrol et
         print(f"full_document length: {len(full_document)}")
         print(f"document_ids list length: {len(document_ids)}")
 
-        print(f"Collection: {full_document}")
-        print(f"Document IDs: {document_ids}")
+        
+        if os.path.exists(index_path+"/colbert/indexes/"+index_name):
+          RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+          if deleted_document_id:
+            print(f"Modeldeki {deleted_document_id} ids siliniyor...")
+            RAG.delete_from_index(deleted_document_id,index_name)
+          print(f"Model dosyası bulundu, {pretrained_model_name} indexe ekleniyor...")
+          RAG.add_to_index(
+              new_collection=full_document,
+              new_document_ids=document_ids,
+              new_document_metadatas=metadata,
+              index_name=index_name,
+            )
+        else:
+          RAG = RAGPretrainedModel.from_pretrained(pretrained_model_name,index_root=index_path)
+          print(f"Model dosyası bulunamadı, {pretrained_model_name} index oluşturuluyor...")
+          RAG.index(
+            collection=full_document,
+            document_ids=document_ids,
+            document_metadatas=metadata,
+            index_name=index_name,
+            max_document_length=data.get("max_document_length"),
+            # use_faiss=True,
+            split_documents=False,
+          )
 
-
-        for doc in full_document:
-            print(f"Document: {doc}, Type: {type(doc)}")
-
-        for doc_id in document_ids:
-            print(f"Document ID: {doc_id}, Type: {type(doc_id)}")
-
-        for meta in metadata:
-          print(f"Metadata item: {meta}, Type: {type(meta)}")
-        # index_request nesnesini dict'e çevir
-        # index_request_dict = index_request.dict()
-        # print(index_request_dict)
-        print("Received JSON data:", data, flush=True)
-
-        # RAG modelini kullanarak indeksle
-        # RAG.add_to_index(
-        #     new_collection=full_document,
-        #     new_document_ids=document_ids,
-        #     new_document_metadatas=metadata,
-        #     index_name=data.get("index_name"),
-        #     max_document_length=data.get("max_document_length"),
-        #     #use_faiss=True
-        #     split_documents=False,
-        # )
-
-        # if os.path.exists(index_path+"/colbert/indexes/"+data.get("index_name")):
-        # if os.path.exists(".ragatouille/colbert/indexes/"+data.get("index_name")):
-        #     print(f"Model dosyası {index_path} bulundu, indexe ekleniyor...")
-        #     # Dosya yolundan modeli yükle
-        #     # RAG.add_to_index(
-        #     #   new_collection=full_document,
-        #     #   new_document_ids=document_ids,
-        #     #   new_document_metadatas=metadata,
-        #     #   index_name=data.get("index_name"),
-        #     # )
-        #     RAG.index(
-        #       collection=full_document,
-        #       document_ids=document_ids,
-        #       document_metadatas=metadata,
-        #       index_name=data.get("index_name"),
-        #       max_document_length=data.get("max_document_length"),
-        #       #use_faiss=True
-        #       split_documents=False,
-        #     )
-        # else:
-        print(f"Model dosyası bulunamadı, {pretrained_model_name} index oluşturuluyor...")
-        RAG.index(
-          collection=full_document,
-          document_ids=document_ids,
-          document_metadatas=metadata,
-          index_name=data.get("index_name"),
-          max_document_length=data.get("max_document_length"),
-          #use_faiss=True
-          split_documents=False,
-        )
-
-        return data.get("index_name")
+        return index_name
 
     except ValidationError as e:
         # Eğer doğrulama hatası olursa
@@ -145,6 +131,8 @@ def search_rag():
         if not data.get("query"):
             raise ValueError("query field is required.")
 
+        index_name = data.get("index_name")
+
         # data'yı yazdır
         # print("Received JSON data:", data)
 
@@ -154,8 +142,8 @@ def search_rag():
         # Sorguyu böl ve RAG modelinde ara
         queries = data.get("query").split('|')
         print("QueryRequest queries:", queries)
-        rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+data.get("index_name"))
-
+        # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
+        rag = model_cache.get_model(data.get("index_name"), index_path)
         docs = rag.search(query=queries, index_name=data.get("index_name"))
         print("doc",docs)
         if data.get("rerank"):
@@ -164,6 +152,34 @@ def search_rag():
             print("rerankink docs",docs)
 
         return jsonify({"result": docs})
+
+    except ValidationError as e:
+        # Eğer doğrulama hatası olursa
+        return jsonify({"error": e.errors()}), 400
+
+# Delete endpoint'i
+@app.route("/delete", methods=["POST"])
+def delete_rag():
+    try:
+        print("delete")
+        # Gelen JSON verisini al ve Pydantic ile doğrula
+        data = request.json
+        if not data.get("deleted_document_id"):
+            raise ValueError("deleted_document_id field is required.")
+        
+        if not data.get("index_name"):
+            raise ValueError("index_name field is required.")  
+          
+        deleted_document_id = data.get("deleted_document_id")
+        index_name = data.get("index_name")  
+        
+        if os.path.exists(index_path+"/colbert/indexes/"+index_name):
+          RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            
+          RAG.delete_from_index(deleted_document_id,index_name)
+          return jsonify({"result": "ok"})
+
+        return jsonify({"result": "false"})
 
     except ValidationError as e:
         # Eğer doğrulama hatası olursa
