@@ -47,8 +47,9 @@ class ModelCache:
                 self.cache.popitem(last=False)
             return model
 
-    def update_model(self, index_name, model):
-        self.cache[index_name] = model
+    def update_model(self, index_name):
+        self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+        docs = self.cache[index_name].search(query="invalidate", index_name=index_name)
         if len(self.cache) > self.max_size:
             self.cache.popitem(last=False)
 
@@ -115,7 +116,7 @@ def index_document():
           )
 
         # Update the model cache with the latest model after modification
-        model_cache.update_model(index_name, rag_model)
+        model_cache.update_model(index_name)
         
         return index_name
 
@@ -180,9 +181,12 @@ def delete_rag():
         index_name = data.get("index_name")  
         
         if os.path.exists(index_path+"/colbert/indexes/"+index_name):
-          RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+          RAG = model_cache.get_model(index_name, index_path)
+          
+          # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
             
           RAG.delete_from_index(deleted_document_id,index_name)
+          model_cache.update_model(index_name)
           return jsonify({"result": "ok"})
 
         return jsonify({"result": "false"})
