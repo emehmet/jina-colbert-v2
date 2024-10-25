@@ -1,28 +1,24 @@
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 from ragatouille import RAGPretrainedModel
-import faiss
+# import faiss
 
 
 from flask import Flask, request, jsonify
 
 
 import os
-import threading
+# import threading
 from ragatouille import RAGPretrainedModel
-import json
+# import json
 
 
 
-# Önceden eğitilmiş model ismi
+# pretrained model name
 pretrained_model_name = "jinaai/jina-colbert-v2"
 index_path = "/home/ec2-user/pyton-projects/jina-colbert-v2/"
 
-# first_load = RAGPretrainedModel.from_pretrained(pretrained_model_name,index_root=index_path)
-
-# Kaydetmek istediğin modelin path'i
 
 app = Flask(__name__)
-# Update any base URLs to use the public ngrok URL
 
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # 16 MB
 
@@ -62,7 +58,6 @@ def index_document():
     try:
 
         data = request.get_json()
-        # Gelen JSON verisini al ve Pydantic ile doğrula
         if not data.get("full_document"):
             raise ValueError("full_document field is required.")
 
@@ -84,7 +79,6 @@ def index_document():
         index_name = data.get("index_name")
         # document_ids = [tuple(doc_id) if isinstance(doc_id, list) else doc_id for doc_id in data.get("document_id")]
 
-        # Uzunluklarını kontrol et
         print(f"full_document length: {len(full_document)}")
         print(f"document_ids list length: {len(document_ids)}")
 
@@ -121,7 +115,6 @@ def index_document():
         return index_name
 
     except ValidationError as e:
-        # Eğer doğrulama hatası olursa
         return jsonify({"error": e.errors()}), 400
 
 
@@ -129,8 +122,7 @@ def index_document():
 @app.route("/search", methods=["POST"])
 def search_rag():
     try:
-        print("searchaaaa")
-        # Gelen JSON verisini al ve Pydantic ile doğrula
+        print("search")
         data = request.json
         if not data.get("index_name"):
             raise ValueError("index_name field is required.")
@@ -143,7 +135,6 @@ def search_rag():
         # data'yı yazdır
         # print("Received JSON data:", data)
 
-        # query_request'i yazdır
         # print("QueryRequest object:", query_request)
 
         # Sorguyu böl ve RAG modelinde ara
@@ -161,15 +152,12 @@ def search_rag():
         return jsonify({"result": docs})
 
     except ValidationError as e:
-        # Eğer doğrulama hatası olursa
         return jsonify({"error": e.errors()}), 400
 
-# Delete endpoint'i
 @app.route("/delete", methods=["POST"])
 def delete_rag():
     try:
         print("delete")
-        # Gelen JSON verisini al ve Pydantic ile doğrula
         data = request.json
         if not data.get("deleted_document_id"):
             raise ValueError("deleted_document_id field is required.")
@@ -192,7 +180,6 @@ def delete_rag():
         return jsonify({"result": "false"})
 
     except ValidationError as e:
-        # Eğer doğrulama hatası olursa
         return jsonify({"error": e.errors()}), 400
 
 # Start the Flask server in a new thread
