@@ -89,7 +89,8 @@ def index_document():
 
         
         if os.path.exists(index_path+"/colbert/indexes/"+index_name):
-          RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+          # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+          RAG = model_cache.get_model(index_name, index_path)
           if deleted_document_id:
             print(f"Modeldeki {deleted_document_id} ids siliniyor...")
             RAG.delete_from_index(deleted_document_id,index_name)
@@ -113,6 +114,9 @@ def index_document():
             split_documents=False,
           )
 
+        # Update the model cache with the latest model after modification
+        model_cache.update_model(index_name, rag_model)
+        
         return index_name
 
     except ValidationError as e:
