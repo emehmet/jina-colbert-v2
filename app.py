@@ -30,27 +30,29 @@ print("Model loaded successfully.")
 
 from collections import OrderedDict
 
-# LRU Cache oluşturmak için sınıf
 class ModelCache:
     def __init__(self, max_size=3):
         self.cache = OrderedDict()
         self.max_size = max_size
 
     def get_model(self, index_name, index_path):
-        # Eğer model cache'de varsa, cache'in en başına al
         if index_name in self.cache:
             self.cache.move_to_end(index_name)
             return self.cache[index_name]
         else:
-            # Yeni model yükle ve cache'e ekle
+            # Load a new model and add to cache
             model = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
             self.cache[index_name] = model
-            # Cache boyutu limiti aşıldıysa en eski modeli sil
             if len(self.cache) > self.max_size:
                 self.cache.popitem(last=False)
             return model
-# ModelCache sınıfı ile cache yönetimi
-model_cache = ModelCache(max_size=25)  # Aynı anda maksimum 3 model saklanacak
+
+    def update_model(self, index_name, model):
+        self.cache[index_name] = model
+        if len(self.cache) > self.max_size:
+            self.cache.popitem(last=False)
+
+model_cache = ModelCache(max_size=25)
 
 
 # İndeksleme endpoint'i
