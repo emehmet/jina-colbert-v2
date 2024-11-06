@@ -45,7 +45,10 @@ class ModelCache:
 
     def update_model(self, index_name):
         self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
-        docs = self.cache[index_name].search(query="invalidate", index_name=index_name)
+        try:
+          docs = self.cache[index_name].search(query="", index_name=index_name)
+        except ValidationError as e:
+          return jsonify({"search not found error": e.errors()}), 204
         if len(self.cache) > self.max_size:
             self.cache.popitem(last=False)
 
@@ -81,6 +84,7 @@ def index_document():
 
         print(f"full_document length: {len(full_document)}")
         print(f"document_ids list length: {len(document_ids)}")
+        print(f"document_ids list: {document_ids}")
 
         
         if os.path.exists(index_path+"/colbert/indexes/"+index_name):
@@ -141,8 +145,8 @@ def search_rag():
         queries = data.get("query").split('|')
         print("QueryRequest queries:", queries)
         # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
-        rag = model_cache.get_model(data.get("index_name"), index_path)
-        docs = rag.search(query=queries, index_name=data.get("index_name"))
+        rag = model_cache.get_model(index_name, index_path)
+        docs = rag.search(query=queries, index_name=index_name)
         print("doc",docs)
         if data.get("rerank"):
             print("rerank")
@@ -167,14 +171,14 @@ def delete_rag():
           
         deleted_document_id = data.get("deleted_document_id")
         index_name = data.get("index_name")  
-        
+        print("deleted_document_id",deleted_document_id)
         if os.path.exists(index_path+"/colbert/indexes/"+index_name):
           RAG = model_cache.get_model(index_name, index_path)
           
           # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
             
           RAG.delete_from_index(deleted_document_id,index_name)
-          model_cache.update_model(index_name)
+          # model_cache.update_model(index_name)
           return jsonify({"result": "ok"})
 
         return jsonify({"result": "false"})
