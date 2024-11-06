@@ -1,4 +1,3 @@
-from pydantic import ValidationError
 from ragatouille import RAGPretrainedModel
 # import faiss
 
@@ -40,14 +39,20 @@ class ModelCache:
             return self.cache[index_name]
         else:
             # Load a new model and add to cache
-            model = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            try:
+              model = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            except Exception as e:
+              return jsonify({"result": []})
             self.cache[index_name] = model
             if len(self.cache) > self.max_size:
                 self.cache.popitem(last=False)
             return model
 
     def update_model(self, index_name):
-        self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+        try:
+          self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+        except Exception as e:
+              return jsonify({"result": []})
         # Dosyayı açıp JSON verisini yükleyelim
         # with open(index_path + "/colbert/indexes/" + index_name+'/collection.json', 'r', encoding='utf-8') as f:
         #   data = json.load(f)
@@ -60,7 +65,7 @@ class ModelCache:
         try:
           docs = self.cache[index_name].search(query=" ", index_name=index_name)
 
-        except RuntimeError as e:
+        except Exception as e:
           return jsonify({"result": []})
 
 
@@ -130,7 +135,7 @@ def index_document():
         
         return index_name
 
-    except ValidationError as e:
+    except Exception as e:
         return jsonify({"error": e.errors()}), 400
 
 
@@ -167,11 +172,11 @@ def search_rag():
               print("rerankink docs",docs)
 
           return jsonify({"result": docs})
-        except RuntimeError as e:
+        except Exception as e:
           return jsonify({"result": []})
 
 
-    except ValidationError as e:
+    except Exception  as e:
         return jsonify({"error": e.errors()}), 400
 
 @app.route("/delete", methods=["POST"])
@@ -199,7 +204,7 @@ def delete_rag():
 
         return jsonify({"result": "false"})
 
-    except ValidationError as e:
+    except Exception as e:
         return jsonify({"error": e.errors()}), 400
 
 # Start the Flask server in a new thread
