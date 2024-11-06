@@ -16,35 +16,35 @@ Model loaded successfully.
 Metadata length: 5
 full_document length: 5
 document_ids list length: 5
-document_ids list: ['672be5b8866df3daf518ec7d0', '672be5b8866df3daf518ec7d1', '672be5b8866df3daf518ec7d2', '672be5b8866df3daf518ec7d3', '672be5b8866df3daf518ec7d4']
+document_ids list: ['672bf0eb866df3daf518ec9b0', '672bf0eb866df3daf518ec9b1', '672bf0eb866df3daf518ec9b2', '672bf0eb866df3daf518ec9b3', '672bf0eb866df3daf518ec9b4']
 Model dosyası bulundu, jinaai/jina-colbert-v2 indexe ekleniyor...
 WARNING: add_to_index support is currently experimental! add_to_index support will be more thorough in future versions
-[Nov 06, 21:55:22] #> Loading codec...
+[Nov 06, 22:43:08] #> Loading codec...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:141: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   centroids = torch.load(centroids_path, map_location='cpu')
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:142: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   avg_residual = torch.load(avgresidual_path, map_location='cpu')
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   bucket_cutoffs, bucket_weights = torch.load(buckets_path, map_location='cpu')
-[Nov 06, 21:55:22] Loading decompress_residuals_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
+[Nov 06, 22:43:08] Loading decompress_residuals_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:1964: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
-[Nov 06, 21:55:22] Loading packbits_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
+[Nov 06, 22:43:09] Loading packbits_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:1964: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
-[Nov 06, 21:55:23] #> Loading IVF...
+[Nov 06, 22:43:10] #> Loading IVF...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/search/index_loader.py:33: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   ivf, ivf_lengths = torch.load(os.path.join(self.index_path, "ivf.pid.pt"), map_location='cpu')
-[Nov 06, 21:55:23] #> Loading doclens...
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 4573.94it/s]
-[Nov 06, 21:55:23] #> Loading codes and residuals...
+[Nov 06, 22:43:10] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 4539.29it/s]
+[Nov 06, 22:43:10] #> Loading codes and residuals...
   0%|          | 0/1 [00:00<?, ?it/s]/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual_embeddings.py:86: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(codes_path, map_location='cpu')
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual_embeddings.py:93: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(residuals_path, map_location='cpu')
-100%|██████████| 1/1 [00:00<00:00, 592.00it/s]
+100%|██████████| 1/1 [00:00<00:00, 594.60it/s]
 ---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
 This is a behaviour change from RAGatouille 0.8.0 onwards.
 This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
@@ -52,18 +52,18 @@ If you're confident with FAISS working on your machine, pass use_faiss=True to r
 --------------------
 
 
-[Nov 06, 21:55:23] #> Note: Output directory /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f already exists
+[Nov 06, 22:43:10] #> Note: Output directory /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f already exists
 
 
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/utils/amp.py:12: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
   self.scaler = torch.cuda.amp.GradScaler()
-[Nov 06, 21:55:28] [0] 		 #> Encoding 5 passages..
+[Nov 06, 22:43:15] [0] 		 #> Encoding 5 passages..
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/utils/amp.py:15: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
   return torch.cuda.amp.autocast() if self.activated else NullContextManager()
-[Nov 06, 21:55:30] [0] 		 avg_doclen_est = 140.1999969482422 	 len(local_sample) = 5
-[Nov 06, 21:55:30] [0] 		 Creating 256 partitions.
-[Nov 06, 21:55:30] [0] 		 *Estimated* 700 embeddings.
-[Nov 06, 21:55:30] [0] 		 #> Saving the indexing plan to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/plan.json ..
+[Nov 06, 22:43:16] [0] 		 avg_doclen_est = 140.1999969482422 	 len(local_sample) = 5
+[Nov 06, 22:43:16] [0] 		 Creating 256 partitions.
+[Nov 06, 22:43:16] [0] 		 *Estimated* 700 embeddings.
+[Nov 06, 22:43:16] [0] 		 #> Saving the indexing plan to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/plan.json ..
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/collection_indexer.py:256: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   sub_sample = torch.load(sub_sample_path)
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:141: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
@@ -73,31 +73,31 @@ If you're confident with FAISS working on your machine, pass use_faiss=True to r
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   bucket_cutoffs, bucket_weights = torch.load(buckets_path, map_location='cpu')
 Warning: number of training points (666) is less than the minimum recommended (2560)
-used 6 iterations (0.1156s) to cluster 666 items into 256 clusters
+used 6 iterations (0.1175s) to cluster 666 items into 256 clusters
 [0.03, 0.029, 0.042, 0.033, 0.035, 0.037, 0.035, 0.033, 0.029, 0.027, 0.05, 0.03, 0.039, 0.03, 0.035, 0.044, 0.03, 0.032, 0.03, 0.04, 0.029, 0.032, 0.037, 0.032, 0.034, 0.03, 0.036, 0.026, 0.036, 0.033, 0.034, 0.032, 0.024, 0.03, 0.033, 0.038, 0.027, 0.035, 0.021, 0.033, 0.035, 0.025, 0.033, 0.028, 0.033, 0.035, 0.04, 0.029, 0.032, 0.04, 0.031, 0.028, 0.024, 0.025, 0.028, 0.033, 0.03, 0.028, 0.033, 0.028, 0.032, 0.033, 0.031, 0.035, 0.032, 0.03, 0.034, 0.039, 0.028, 0.033, 0.043, 0.026, 0.03, 0.036, 0.032, 0.041, 0.038, 0.031, 0.032, 0.029, 0.041, 0.03, 0.031, 0.038, 0.037, 0.031, 0.032, 0.037, 0.032, 0.027, 0.027, 0.028, 0.036, 0.028, 0.031, 0.045, 0.038, 0.033, 0.039, 0.034, 0.033, 0.043, 0.043, 0.036, 0.03, 0.025, 0.033, 0.033, 0.032, 0.028, 0.03, 0.03, 0.024, 0.031, 0.028, 0.035, 0.031, 0.033, 0.023, 0.037, 0.039, 0.034, 0.04, 0.03, 0.04, 0.03, 0.031, 0.037]
-0it [00:00, ?it/s][Nov 06, 21:55:30] [0] 		 #> Encoding 5 passages..
-1it [00:00, 24.32it/s]
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2309.64it/s]
-[Nov 06, 21:55:30] #> Optimizing IVF to store map from centroids to list of pids..
-[Nov 06, 21:55:30] #> Building the emb2pid mapping..
-[Nov 06, 21:55:30] len(emb2pid) = 701
-  0%|          | 0/256 [00:00<?, ?it/s]100%|██████████| 256/256 [00:00<00:00, 73629.69it/s]
-[Nov 06, 21:55:30] #> Saved optimized IVF to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/ivf.pid.pt
+0it [00:00, ?it/s][Nov 06, 22:43:17] [0] 		 #> Encoding 5 passages..
+1it [00:00, 24.36it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2286.97it/s]
+[Nov 06, 22:43:17] #> Optimizing IVF to store map from centroids to list of pids..
+[Nov 06, 22:43:17] #> Building the emb2pid mapping..
+[Nov 06, 22:43:17] len(emb2pid) = 701
+  0%|          | 0/256 [00:00<?, ?it/s]100%|██████████| 256/256 [00:00<00:00, 74092.04it/s]
+[Nov 06, 22:43:17] #> Saved optimized IVF to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/ivf.pid.pt
 Successfully updated index with 5 new documents!
  New index size: 5
 Loading searcher for index 668712a5280900735646451f for the first time... This may take a few seconds
-[Nov 06, 21:55:42] #> Loading codec...
-[Nov 06, 21:55:42] #> Loading IVF...
-[Nov 06, 21:55:42] #> Loading doclens...
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 15947.92it/s]
-[Nov 06, 21:55:42] #> Loading codes and residuals...
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1812.58it/s]
-128.127.168.254 - - [06/Nov/2024 21:55:43] "POST /index HTTP/1.1" 200 -
+[Nov 06, 22:43:29] #> Loading codec...
+[Nov 06, 22:43:29] #> Loading IVF...
+[Nov 06, 22:43:29] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 15592.21it/s]
+[Nov 06, 22:43:29] #> Loading codes and residuals...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1645.47it/s]
+128.127.168.254 - - [06/Nov/2024 22:43:30] "POST /index HTTP/1.1" 200 -
 Searcher loaded!
 WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
 
 #> QueryTokenizer.tensorize(batch_text[0], batch_background[0], bsize) ==
-#> Input: . , 		 True, 		 None
+#> Input: .  , 		 True, 		 None
 #> Output IDs: torch.Size([32]), tensor([     0, 250002,      5,      2, 250001, 250001, 250001, 250001, 250001,
         250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
         250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
@@ -108,41 +108,145 @@ WARNING: k value is larger than the number of documents in the index! Lowering k
 search
 QueryRequest queries: ['uzaktan çalışma kuralları nelerdir']
 WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
-0it [00:00, ?it/s]1it [00:00, 192.42it/s]
-128.127.168.254 - - [06/Nov/2024 21:56:05] "POST /search HTTP/1.1" 200 -
-doc [{'content': 'UZAKTAN ÇALIŞMADA İSG KURALLARI', 'score': 22.296875, 'rank': 1, 'document_id': '672be5b8866df3daf518ec7d0', 'passage_id': 0, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'Section header', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672be5b8866df3daf518ec7d', 'projectId': '668712a5280900735646451f'}}, {'content': '4. ERGONOMİ\na. Evde bilgisayarımız ile çalışırken de ergonomi kurallarımıza dikkat etmeliyiz; bu kapsamda gereken önlemleri almalıyız.\nb. Mouse kullanırken bilekler aşağı veya yukarı bükülmemelidir.\nc. Dik oturma, omurgaya yaklaşık % 25 daha az yük binmesini sağlar ve birçok sırt problemini önler. Bu sebeple ekranlı araçlar ile çalışırken dik oturma pozisyonu alınmalıdır.\nd. Ekranımızın üst noktası göz hizamıza gelecek şekilde ekran yüksekliğini ayarlamalı, ekranımız tozlu kalmamalı, görüntüde titreşim olmamalı ve ekranımızda güneş ışığı yansımaları olmamalıdır.\ne. Ekrana bakış uzaklığı 50 – 70 cm. arasında olmalıdır.\nf. Her 20 dakikada bir, 6 metre uzaklıkta ki bir noktaya 20 saniye odaklanılmalıdır. Bu uygulama göz sağlığınız için faydalıdır.', 'score': 20.015625, 'rank': 2, 'document_id': '672be5b8866df3daf518ec7d4', 'passage_id': 4, 'document_metadata': {'pageNumber': '1, 2', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672be5b8866df3daf518ec7d', 'projectId': '668712a5280900735646451f'}}, {'content': '1. GENEL\na. Evlerimizde özellikle yerde bırakılan terlik, tv kumandası gibi küçük nesneler, katlanmış halılar ve mobilya kenarları takılıp düşmeye neden olabilecek tehlikelerdir. Gece karanlıkta veya yeterli aydınlatma olmayan alanlarda bu tehlike çok daha fazladır. Çalışma alanlarımız yeterli aydınlıkta olmalı ve takılıp düşmemize neden olacak nesnelerden arındırılmalıdır.\nb. Islak alanlarda düşmelerde ise ağırlıklı olarak kalıcı sakatlık durumları olasıdır. Özellikle banyo sırasında ve sonrasında ıslak zeminde kayıp kalça eklemi üzerine düşmek ağır sakatlıklara yol açar, bu nedenle duştan çıkarken mutlaka tutunmalı ve banyo zemini kuru tutulmalıdır.\nc. Çalışma yerinin gürültü gibi hususlardan arındırılmış olmasına özen gösterin.\nd. Aydınlatma ve ısının çalışmaya uygun olduğundan emin olun.\ne. Uzatma kabloları ve şarj kabloları da evde takılıp düşmemize neden olabilir, olabildiğince kablolar geçiş yolumuzda bulundurulmamalıdır.', 'score': 19.109375, 'rank': 3, 'document_id': '672be5b8866df3daf518ec7d1', 'passage_id': 1, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672be5b8866df3daf518ec7d', 'projectId': '668712a5280900735646451f'}}, {'content': '3. YANGIN\na. İş bilgisayarınız ile çalışırken, kaza ile sıcak içecekleriniz üzerinize dökülebilir ve yaralanmanıza sebep olabilir veya bilgisayarınızın üzerine dökülmesi sonucu yangına sebep olabilir. Sıcak içeceklerinizi bilgisayarınızdan uzakta tutarak dökülme tehlikesine karşı dikkatli olunuz.\nb. elektrik sisteminin kullanılan ofis ekipmanına uygun olduğundan emin olun\nc. Doğalgaz kullanımı sonrası gazın kapalı olduğundan mutlaka emin olunuz.\nd. Radyötör veya portatif ısıtıcıların (UFO gibi) yanıcı maddelerden uzakta olduğundan emin olun\ne. Çıkış kapılarının önünde engel olmadığından emin olun; apartmanınızın acil çıkış planını Yöneticinizden talep edin. Apartmanda yangın söndürme tüplerinin bulunduğundan emin olun. Bu konuda Yöneticinizden talepte bulunun.', 'score': 19.078125, 'rank': 4, 'document_id': '672be5b8866df3daf518ec7d3', 'passage_id': 3, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672be5b8866df3daf518ec7d', 'projectId': '668712a5280900735646451f'}}, {'content': '2. ELEKTRİK\na. Kullandığınız uzatma kablolarının ve prizlerin yalıtımlarının sağlam olduğundan emin olunuz.\nb. İş bilgisayarınızı kullandığınız prize birçok cihaz bağlayarak aşırı yükleme yapmayınız, bu durum evinizde yangına sebep olabilir.\nc. Islak eller ile prize fiş takmayınız.\nd. Gün sonunda iş bilgisayarınızın ve şarj cihazlarınızın fişini prizden çıkartmayı unutmayınız.', 'score': 18.5625, 'rank': 5, 'document_id': '672be5b8866df3daf518ec7d2', 'passage_id': 2, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672be5b8866df3daf518ec7d', 'projectId': '668712a5280900735646451f'}}]
+0it [00:00, ?it/s]1it [00:00, 157.52it/s]
+128.127.168.254 - - [06/Nov/2024 22:43:44] "POST /search HTTP/1.1" 200 -
+doc [{'content': 'UZAKTAN ÇALIŞMADA İSG KURALLARI', 'score': 22.296875, 'rank': 1, 'document_id': '672bf0eb866df3daf518ec9b0', 'passage_id': 0, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'Section header', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672bf0eb866df3daf518ec9b', 'projectId': '668712a5280900735646451f'}}, {'content': '4. ERGONOMİ\na. Evde bilgisayarımız ile çalışırken de ergonomi kurallarımıza dikkat etmeliyiz; bu kapsamda gereken önlemleri almalıyız.\nb. Mouse kullanırken bilekler aşağı veya yukarı bükülmemelidir.\nc. Dik oturma, omurgaya yaklaşık % 25 daha az yük binmesini sağlar ve birçok sırt problemini önler. Bu sebeple ekranlı araçlar ile çalışırken dik oturma pozisyonu alınmalıdır.\nd. Ekranımızın üst noktası göz hizamıza gelecek şekilde ekran yüksekliğini ayarlamalı, ekranımız tozlu kalmamalı, görüntüde titreşim olmamalı ve ekranımızda güneş ışığı yansımaları olmamalıdır.\ne. Ekrana bakış uzaklığı 50 – 70 cm. arasında olmalıdır.\nf. Her 20 dakikada bir, 6 metre uzaklıkta ki bir noktaya 20 saniye odaklanılmalıdır. Bu uygulama göz sağlığınız için faydalıdır.', 'score': 20.015625, 'rank': 2, 'document_id': '672bf0eb866df3daf518ec9b4', 'passage_id': 4, 'document_metadata': {'pageNumber': '1, 2', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672bf0eb866df3daf518ec9b', 'projectId': '668712a5280900735646451f'}}, {'content': '1. GENEL\na. Evlerimizde özellikle yerde bırakılan terlik, tv kumandası gibi küçük nesneler, katlanmış halılar ve mobilya kenarları takılıp düşmeye neden olabilecek tehlikelerdir. Gece karanlıkta veya yeterli aydınlatma olmayan alanlarda bu tehlike çok daha fazladır. Çalışma alanlarımız yeterli aydınlıkta olmalı ve takılıp düşmemize neden olacak nesnelerden arındırılmalıdır.\nb. Islak alanlarda düşmelerde ise ağırlıklı olarak kalıcı sakatlık durumları olasıdır. Özellikle banyo sırasında ve sonrasında ıslak zeminde kayıp kalça eklemi üzerine düşmek ağır sakatlıklara yol açar, bu nedenle duştan çıkarken mutlaka tutunmalı ve banyo zemini kuru tutulmalıdır.\nc. Çalışma yerinin gürültü gibi hususlardan arındırılmış olmasına özen gösterin.\nd. Aydınlatma ve ısının çalışmaya uygun olduğundan emin olun.\ne. Uzatma kabloları ve şarj kabloları da evde takılıp düşmemize neden olabilir, olabildiğince kablolar geçiş yolumuzda bulundurulmamalıdır.', 'score': 19.109375, 'rank': 3, 'document_id': '672bf0eb866df3daf518ec9b1', 'passage_id': 1, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672bf0eb866df3daf518ec9b', 'projectId': '668712a5280900735646451f'}}, {'content': '3. YANGIN\na. İş bilgisayarınız ile çalışırken, kaza ile sıcak içecekleriniz üzerinize dökülebilir ve yaralanmanıza sebep olabilir veya bilgisayarınızın üzerine dökülmesi sonucu yangına sebep olabilir. Sıcak içeceklerinizi bilgisayarınızdan uzakta tutarak dökülme tehlikesine karşı dikkatli olunuz.\nb. elektrik sisteminin kullanılan ofis ekipmanına uygun olduğundan emin olun\nc. Doğalgaz kullanımı sonrası gazın kapalı olduğundan mutlaka emin olunuz.\nd. Radyötör veya portatif ısıtıcıların (UFO gibi) yanıcı maddelerden uzakta olduğundan emin olun\ne. Çıkış kapılarının önünde engel olmadığından emin olun; apartmanınızın acil çıkış planını Yöneticinizden talep edin. Apartmanda yangın söndürme tüplerinin bulunduğundan emin olun. Bu konuda Yöneticinizden talepte bulunun.', 'score': 19.078125, 'rank': 4, 'document_id': '672bf0eb866df3daf518ec9b3', 'passage_id': 3, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672bf0eb866df3daf518ec9b', 'projectId': '668712a5280900735646451f'}}, {'content': '2. ELEKTRİK\na. Kullandığınız uzatma kablolarının ve prizlerin yalıtımlarının sağlam olduğundan emin olunuz.\nb. İş bilgisayarınızı kullandığınız prize birçok cihaz bağlayarak aşırı yükleme yapmayınız, bu durum evinizde yangına sebep olabilir.\nc. Islak eller ile prize fiş takmayınız.\nd. Gün sonunda iş bilgisayarınızın ve şarj cihazlarınızın fişini prizden çıkartmayı unutmayınız.', 'score': 18.5625, 'rank': 5, 'document_id': '672bf0eb866df3daf518ec9b2', 'passage_id': 2, 'document_metadata': {'pageNumber': '1', 'tables': '', 'topicTitle': 'UZAKTAN ÇALIŞMADA İSG KURALLARI ', 'type': 'List item', 'source': 'Uzaktan_Çalışmada_İSG.PDF', 'fileId': '672bf0eb866df3daf518ec9b', 'projectId': '668712a5280900735646451f'}}]
 delete
-deleted_document_id ['672be5b8866df3daf518ec7d0', '672be5b8866df3daf518ec7d1', '672be5b8866df3daf518ec7d2', '672be5b8866df3daf518ec7d3', '672be5b8866df3daf518ec7d4']
+deleted_document_id ['672bf0eb866df3daf518ec9b0', '672bf0eb866df3daf518ec9b1', '672bf0eb866df3daf518ec9b2', '672bf0eb866df3daf518ec9b3', '672bf0eb866df3daf518ec9b4']
 WARNING: delete_from_index support is currently experimental! delete_from_index support will be more thorough in future versions
-[Nov 06, 21:56:35] #> Loading codec...
-[Nov 06, 21:56:35] #> Loading IVF...
-[Nov 06, 21:56:35] #> Loading doclens...
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 16320.25it/s]
-[Nov 06, 21:56:35] #> Loading codes and residuals...
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1825.99it/s]
-[Nov 06, 21:56:41] #> Loading IVF...
+[Nov 06, 22:44:18] #> Loading codec...
+[Nov 06, 22:44:18] #> Loading IVF...
+[Nov 06, 22:44:18] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 15947.92it/s]
+[Nov 06, 22:44:18] #> Loading codes and residuals...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1826.79it/s]
+[Nov 06, 22:44:24] #> Loading IVF...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/index_updater.py:281: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   ivf, ivf_lengths = torch.load(
-[Nov 06, 21:56:41] #> Removing pids: [0, 1, 2, 3, 4]...
-[Nov 06, 21:56:41] Loading segmented_lookup_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
-[Nov 06, 21:56:41] #> Persisting index changes to disk
-[Nov 06, 21:56:41] #> Loading doclens...
+[Nov 06, 22:44:24] #> Removing pids: [0, 1, 2, 3, 4]...
+[Nov 06, 22:44:24] Loading segmented_lookup_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
+[Nov 06, 22:44:25] #> Persisting index changes to disk
+[Nov 06, 22:44:25] #> Loading doclens...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/index_updater.py:312: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(codes_path, map_location="cpu")
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/index_updater.py:316: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(residuals_path, map_location="cpu")
-[Nov 06, 21:56:41] #> Loading doclens...
-[Nov 06, 21:56:41] #> Loading doclens...
-[Nov 06, 21:56:41] #> Loading doclens...
-[Nov 06, 21:56:41] #> Loading doclens...
-[Nov 06, 21:56:41] #> Current average chunksize is: 25000.
-[Nov 06, 21:56:41] #> The last chunk can hold 24995 additional passages.
-[Nov 06, 21:56:41] #> Writing 0 passages to the last chunk...
+[Nov 06, 22:44:25] #> Loading doclens...
+[Nov 06, 22:44:25] #> Loading doclens...
+[Nov 06, 22:44:25] #> Loading doclens...
+[Nov 06, 22:44:25] #> Loading doclens...
+[Nov 06, 22:44:25] #> Current average chunksize is: 25000.
+[Nov 06, 22:44:25] #> The last chunk can hold 24995 additional passages.
+[Nov 06, 22:44:25] #> Writing 0 passages to the last chunk...
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual_embeddings.py:86: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(codes_path, map_location='cpu')
 /home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual_embeddings.py:93: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
   return torch.load(residuals_path, map_location='cpu')
-[Nov 06, 21:56:41] #> Loading doclens...
-[Nov 06, 21:56:41] #> Updating metadata for added passages...
-[Nov 06, 21:56:41] #> Persisted updated IVF to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/ivf.pid.pt
-128.127.168.254 - - [06/Nov/2024 21:56:43] "POST /delete HTTP/1.1" 200 -
+[Nov 06, 22:44:25] #> Loading doclens...
+[Nov 06, 22:44:25] #> Updating metadata for added passages...
+[Nov 06, 22:44:25] #> Persisted updated IVF to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/ivf.pid.pt
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/utils/amp.py:12: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler()
+Successfully deleted documents with these IDs: ['672bf0eb866df3daf518ec9b0', '672bf0eb866df3daf518ec9b1', '672bf0eb866df3daf518ec9b2', '672bf0eb866df3daf518ec9b3', '672bf0eb866df3daf518ec9b4']
+Loading searcher for index 668712a5280900735646451f for the first time... This may take a few seconds
+[Nov 06, 22:44:36] #> Loading codec...
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:141: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  centroids = torch.load(centroids_path, map_location='cpu')
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:142: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  avg_residual = torch.load(avgresidual_path, map_location='cpu')
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/codecs/residual.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  bucket_cutoffs, bucket_weights = torch.load(buckets_path, map_location='cpu')
+[Nov 06, 22:44:36] #> Loading IVF...
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/search/index_loader.py:33: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ivf, ivf_lengths = torch.load(os.path.join(self.index_path, "ivf.pid.pt"), map_location='cpu')
+[Nov 06, 22:44:36] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 15650.39it/s]
+[Nov 06, 22:44:36] #> Loading codes and residuals...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2327.58it/s]
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/utils/amp.py:15: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  return torch.cuda.amp.autocast() if self.activated else NullContextManager()
+128.127.168.254 - - [06/Nov/2024 22:44:38] "POST /delete HTTP/1.1" 200 -
+Searcher loaded!
+WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
+
+#> QueryTokenizer.tensorize(batch_text[0], batch_background[0], bsize) ==
+#> Input: .  , 		 True, 		 None
+#> Output IDs: torch.Size([32]), tensor([     0, 250002,      5,      2, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001], device='cuda:0')
+#> Output Mask: torch.Size([32]), tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1], device='cuda:0')
+
+search
+QueryRequest queries: ['uzaktan çalışma kuralları nelerdir']
+WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+128.127.168.254 - - [06/Nov/2024 22:45:13] "POST /search HTTP/1.1" 200 -
+Metadata length: 5
+full_document length: 5
+document_ids list length: 5
+document_ids list: ['672bf19d866df3daf518eca10', '672bf19d866df3daf518eca11', '672bf19d866df3daf518eca12', '672bf19d866df3daf518eca13', '672bf19d866df3daf518eca14']
+Model dosyası bulundu, jinaai/jina-colbert-v2 indexe ekleniyor...
+WARNING: add_to_index support is currently experimental! add_to_index support will be more thorough in future versions
+[Nov 06, 22:46:00] #> Loading codec...
+[Nov 06, 22:46:00] #> Loading IVF...
+[Nov 06, 22:46:00] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 13189.64it/s]
+[Nov 06, 22:46:00] #> Loading codes and residuals...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2307.10it/s]
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[Nov 06, 22:46:01] #> Note: Output directory /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f already exists
+
+
+[Nov 06, 22:46:06] [0] 		 #> Encoding 5 passages..
+[Nov 06, 22:46:06] [0] 		 avg_doclen_est = 140.1999969482422 	 len(local_sample) = 5
+[Nov 06, 22:46:06] [0] 		 Creating 256 partitions.
+[Nov 06, 22:46:06] [0] 		 *Estimated* 700 embeddings.
+[Nov 06, 22:46:06] [0] 		 #> Saving the indexing plan to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/plan.json ..
+/home/ec2-user/pyton-projects/jina-colbert-v2/.venv/lib64/python3.9/site-packages/colbert/indexing/collection_indexer.py:256: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  sub_sample = torch.load(sub_sample_path)
+Warning: number of training points (666) is less than the minimum recommended (2560)
+used 6 iterations (0.0048s) to cluster 666 items into 256 clusters
+[0.03, 0.029, 0.042, 0.033, 0.035, 0.037, 0.035, 0.033, 0.029, 0.027, 0.05, 0.03, 0.039, 0.03, 0.035, 0.044, 0.03, 0.032, 0.03, 0.04, 0.029, 0.032, 0.037, 0.032, 0.034, 0.03, 0.036, 0.026, 0.036, 0.033, 0.034, 0.032, 0.024, 0.03, 0.033, 0.038, 0.027, 0.035, 0.021, 0.033, 0.035, 0.025, 0.033, 0.028, 0.033, 0.035, 0.04, 0.029, 0.032, 0.04, 0.031, 0.028, 0.024, 0.025, 0.028, 0.033, 0.03, 0.028, 0.033, 0.028, 0.032, 0.033, 0.031, 0.035, 0.032, 0.03, 0.034, 0.039, 0.028, 0.033, 0.043, 0.026, 0.03, 0.036, 0.032, 0.041, 0.038, 0.031, 0.032, 0.029, 0.041, 0.03, 0.031, 0.038, 0.037, 0.031, 0.032, 0.037, 0.032, 0.027, 0.027, 0.028, 0.036, 0.028, 0.031, 0.045, 0.038, 0.033, 0.039, 0.034, 0.033, 0.043, 0.043, 0.036, 0.03, 0.025, 0.033, 0.033, 0.032, 0.028, 0.03, 0.03, 0.024, 0.031, 0.028, 0.035, 0.031, 0.033, 0.023, 0.037, 0.039, 0.034, 0.04, 0.03, 0.04, 0.03, 0.031, 0.037]
+0it [00:00, ?it/s][Nov 06, 22:46:06] [0] 		 #> Encoding 5 passages..
+1it [00:00, 42.74it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2796.20it/s]
+[Nov 06, 22:46:06] #> Optimizing IVF to store map from centroids to list of pids..
+[Nov 06, 22:46:06] #> Building the emb2pid mapping..
+[Nov 06, 22:46:06] len(emb2pid) = 701
+  0%|          | 0/256 [00:00<?, ?it/s]100%|██████████| 256/256 [00:00<00:00, 77253.17it/s]
+[Nov 06, 22:46:06] #> Saved optimized IVF to /home/ec2-user/pyton-projects/jina-colbert-v2/colbert/indexes/668712a5280900735646451f/ivf.pid.pt
+Successfully updated index with 5 new documents!
+ New index size: 5
+Loading searcher for index 668712a5280900735646451f for the first time... This may take a few seconds
+[Nov 06, 22:46:17] #> Loading codec...
+[Nov 06, 22:46:17] #> Loading IVF...
+[Nov 06, 22:46:17] #> Loading doclens...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 15650.39it/s]
+[Nov 06, 22:46:17] #> Loading codes and residuals...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1746.90it/s]
+128.127.168.254 - - [06/Nov/2024 22:46:18] "POST /index HTTP/1.1" 200 -
+Searcher loaded!
+WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
+
+#> QueryTokenizer.tensorize(batch_text[0], batch_background[0], bsize) ==
+#> Input: .  , 		 True, 		 None
+#> Output IDs: torch.Size([32]), tensor([     0, 250002,      5,      2, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001, 250001,
+        250001, 250001, 250001, 250001, 250001], device='cuda:0')
+#> Output Mask: torch.Size([32]), tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1], device='cuda:0')
+
+search
+QueryRequest queries: ['uzaktan çalışma kuralları nelerdir']
+WARNING: k value is larger than the number of documents in the index! Lowering k to 5...
+0it [00:00, ?it/s]1it [00:00, 193.90it/s]
+128.127.168.254 - - [06/Nov/2024 22:48:26] "POST /search HTTP/1.1" 200 -

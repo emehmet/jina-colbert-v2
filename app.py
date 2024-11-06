@@ -45,12 +45,21 @@ class ModelCache:
 
     def update_model(self, index_name):
         self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
-        try:
-          docs = self.cache[index_name].search(query="", index_name=index_name)
-        except ValidationError as e:
-          return jsonify({"search not found error": e.errors()}), 204
+        # Dosyayı açıp JSON verisini yükleyelim
+        # with open(index_path + "/colbert/indexes/" + index_name+'/collection.json', 'r', encoding='utf-8') as f:
+        #   data = json.load(f)
+        #   if not data:
+        #       print("collection boş. search index çalışmadı")
+        #   else:
+        #       print("collection dolu") 
         if len(self.cache) > self.max_size:
-            self.cache.popitem(last=False)
+          self.cache.popitem(last=False)
+        try:
+          docs = self.cache[index_name].search(query=" ", index_name=index_name)
+
+        except RuntimeError as e:
+          return jsonify({"result": []})
+
 
 model_cache = ModelCache(max_size=25)
 
@@ -146,14 +155,24 @@ def search_rag():
         print("QueryRequest queries:", queries)
         # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
         rag = model_cache.get_model(index_name, index_path)
-        docs = rag.search(query=queries, index_name=index_name)
-        print("doc",docs)
-        if data.get("rerank"):
-            print("rerank")
-            docs = rag.rerank(query=queries, documents=[doc['content'] for doc in docs], k=data.get("k") or 5)
-            print("rerankink docs",docs)
+        # with open(index_path + "/colbert/indexes/" + index_name+'/collection.json', 'r', encoding='utf-8') as f:
+        #   json_data = json.load(f)
+        #   if not json_data:
+        #       print("search boş. search çalışmadı")
+        #       return []
 
-        return jsonify({"result": docs})
+        try:
+          docs = rag.search(query=queries, index_name=index_name)
+          print("doc",docs)
+          if data.get("rerank"):
+              print("rerank")
+              docs = rag.rerank(query=queries, documents=[doc['content'] for doc in docs], k=data.get("k") or 5)
+              print("rerankink docs",docs)
+
+          return jsonify({"result": docs})
+        except RuntimeError as e:
+          return jsonify({"result": []})
+
 
     except ValidationError as e:
         return jsonify({"error": e.errors()}), 400
@@ -178,7 +197,7 @@ def delete_rag():
           # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
             
           RAG.delete_from_index(deleted_document_id,index_name)
-          # model_cache.update_model(index_name)
+          model_cache.update_model(index_name)
           return jsonify({"result": "ok"})
 
         return jsonify({"result": "false"})
