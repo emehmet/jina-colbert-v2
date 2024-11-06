@@ -156,6 +156,7 @@ def search_rag():
         # Sorguyu böl ve RAG modelinde ara
         queries = data.get("query").split('|')
         print("QueryRequest queries:", queries)
+        rag = model_cache.get_model(index_name, index_path)
         # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
         try:
           docs = rag.search(query=queries, index_name=index_name)
