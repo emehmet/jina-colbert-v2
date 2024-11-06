@@ -157,13 +157,17 @@ def search_rag():
         queries = data.get("query").split('|')
         print("QueryRequest queries:", queries)
         # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
-        rag = model_cache.get_model(index_name, index_path)
-        docs = rag.search(query=queries, index_name=index_name)
-        print("doc",docs)
-        if data.get("rerank"):
-            print("rerank")
-            docs = rag.rerank(query=queries, documents=[doc['content'] for doc in docs], k=data.get("k") or 5)
-            print("rerankink docs",docs)
+        try:
+          docs = rag.search(query=queries, index_name=index_name)
+          print("doc",docs)
+          if data.get("rerank"):
+              print("rerank")
+              docs = rag.rerank(query=queries, documents=[doc['content'] for doc in docs], k=data.get("k") or 5)
+              print("rerankink docs",docs)
+
+          return jsonify({"result": docs})
+        except RuntimeError as e:
+          return jsonify({"result": []})
 
 
     except ValidationError as e:
@@ -200,4 +204,4 @@ def delete_rag():
 # Start the Flask server in a new thread
 if __name__ == "__main__":
     # threading.Thread(target=app.run, kwargs={"use_reloader": False, "debug": True}).start()
-    app.run(host="0.0.0.0",port=5001)
+    app.run(host="0.0.0.0",port=os.getenv("PORT"))
