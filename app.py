@@ -10,12 +10,15 @@ import os
 # import threading
 from ragatouille import RAGPretrainedModel
 # import json
+from dotenv import load_dotenv
 
+load_dotenv()  # .env dosyasını yükler
+project_name = os.getenv("COLBERT_PROJECT_NAME", "default-value")
 
 
 # pretrained model name
 pretrained_model_name = "jinaai/jina-colbert-v2"
-index_path = "/home/ec2-user/pyton-projects/colbert-preview/"
+index_path = "/home/ec2-user/pyton-projects/{project_name}/"
 
 
 app = Flask(__name__)
