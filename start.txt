@@ -1,0 +1,1 @@
+nohup bash start.sh > output.log 2>&1 &

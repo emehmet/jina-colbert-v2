@@ -1,5 +1,5 @@
 from ragatouille import RAGPretrainedModel
-# import faiss
+import faiss
 
 
 from flask import Flask, request, jsonify
@@ -7,7 +7,6 @@ from flask import Flask, request, jsonify
 
 import os
 # import threading
-from ragatouille import RAGPretrainedModel
 # import json
 from dotenv import load_dotenv
 
@@ -126,7 +125,7 @@ def index_document():
             document_metadatas=metadata,
             index_name=index_name,
             max_document_length=data.get("max_document_length"),
-            # use_faiss=True,
+            use_faiss=True,
             split_documents=False,
           )
 
@@ -135,8 +134,8 @@ def index_document():
         
         return index_name
 
-    except Exception as e:
-        return jsonify({"error": e.errors()}), 400
+    except (Exception) as e:
+        return jsonify({"error": str(e)}), 400
 
 
 # Sorgu endpoint'i
@@ -177,7 +176,7 @@ def search_rag():
 
 
     except Exception  as e:
-        return jsonify({"error": e.errors()}), 400
+        return jsonify({"error": str(e)}), 400
 
 @app.route("/delete", methods=["POST"])
 def delete_rag():
@@ -205,7 +204,7 @@ def delete_rag():
         return jsonify({"result": "false"})
 
     except Exception as e:
-        return jsonify({"error": e.errors()}), 400
+        return jsonify({"error": str(e)}), 400
 
 # Start the Flask server in a new thread
 if __name__ == "__main__":

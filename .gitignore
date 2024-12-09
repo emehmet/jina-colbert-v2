@@ -2,3 +2,5 @@
 colbert
 *.log
 .env
+start.sh
+.venv1
