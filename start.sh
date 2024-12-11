@@ -1,3 +1,3 @@
 #!/bin/bash
-source .venv1/bin/activate
+source .venvyildiz/bin/activate
 python app.py

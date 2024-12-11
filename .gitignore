@@ -4,4 +4,5 @@ colbert
 .env
 start.sh
 .venv1
-.venvyildiz
+.venvturkish
+req.txt

@@ -1,4 +1,5 @@
 from ragatouille import RAGPretrainedModel
+
 import faiss
 
 
@@ -6,6 +7,7 @@ from flask import Flask, request, jsonify
 
 
 import os
+
 # import threading
 # import json
 from dotenv import load_dotenv
@@ -15,17 +17,18 @@ project_name = os.getenv("COLBERT_PROJECT_NAME", "default-value")
 
 
 # pretrained model name
-pretrained_model_name = "jinaai/jina-colbert-v2"
+pretrained_model_name = os.getenv("MODEL_NAME")
 index_path = f"/home/ec2-user/pyton-projects/{project_name}/"
 
 
 app = Flask(__name__)
 
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # 16 MB
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1000 * 1000  # 16 MB
 
 print("Model loaded successfully.")
 
 from collections import OrderedDict
+
 
 class ModelCache:
     def __init__(self, max_size=3):
@@ -39,9 +42,11 @@ class ModelCache:
         else:
             # Load a new model and add to cache
             try:
-              model = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+                model = RAGPretrainedModel.from_index(
+                    index_path + "/colbert/indexes/" + index_name
+                )
             except Exception as e:
-              return jsonify({"result": []})
+                return jsonify({"result": []})
             self.cache[index_name] = model
             if len(self.cache) > self.max_size:
                 self.cache.popitem(last=False)
@@ -49,23 +54,25 @@ class ModelCache:
 
     def update_model(self, index_name):
         try:
-          self.cache[index_name] = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            self.cache[index_name] = RAGPretrainedModel.from_index(
+                index_path + "/colbert/indexes/" + index_name
+            )
         except Exception as e:
-              return jsonify({"result": []})
+            return jsonify({"result": []})
         # Dosyayı açıp JSON verisini yükleyelim
         # with open(index_path + "/colbert/indexes/" + index_name+'/collection.json', 'r', encoding='utf-8') as f:
         #   data = json.load(f)
         #   if not data:
         #       print("collection boş. search index çalışmadı")
         #   else:
-        #       print("collection dolu") 
+        #       print("collection dolu")
         if len(self.cache) > self.max_size:
-          self.cache.popitem(last=False)
+            self.cache.popitem(last=False)
         try:
-          docs = self.cache[index_name].search(query=" ", index_name=index_name)
+            docs = self.cache[index_name].search(query=" ", index_name=index_name)
 
         except Exception as e:
-          return jsonify({"result": []})
+            return jsonify({"result": []})
 
 
 model_cache = ModelCache(max_size=25)
@@ -89,7 +96,6 @@ def index_document():
         if not data.get("index_name"):
             raise ValueError("index_name field is required.")
 
-   
         metadata = data.get("metadata")
         print(f"Metadata length: {len(metadata)}")
         full_document = data.get("full_document")
@@ -102,39 +108,45 @@ def index_document():
         print(f"document_ids list length: {len(document_ids)}")
         print(f"document_ids list: {document_ids}")
 
-        
-        if os.path.exists(index_path+"/colbert/indexes/"+index_name):
-          # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
-          RAG = model_cache.get_model(index_name, index_path)
-          if deleted_document_id:
-            print(f"Modeldeki {deleted_document_id} ids siliniyor...")
-            RAG.delete_from_index(deleted_document_id,index_name)
-          print(f"Model dosyası bulundu, {pretrained_model_name} indexe ekleniyor...")
-          RAG.add_to_index(
-              new_collection=full_document,
-              new_document_ids=document_ids,
-              new_document_metadatas=metadata,
-              index_name=index_name,
+        if os.path.exists(index_path + "/colbert/indexes/" + index_name + "/plan.json"):
+            # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            RAG = model_cache.get_model(index_name, index_path)
+            if deleted_document_id:
+                print(f"Modeldeki {deleted_document_id} ids siliniyor...")
+                RAG.delete_from_index(deleted_document_id, index_name)
+            print(f"Model dosyası bulundu, {pretrained_model_name} indexe ekleniyor...")
+            RAG.add_to_index(
+                new_collection=full_document,
+                new_document_ids=document_ids,
+                new_document_metadatas=metadata,
+                index_name=index_name,
+                use_faiss=True,
+                split_documents=True,  # Belgeleri otomatik olarak parçalara ayır
             )
         else:
-          RAG = RAGPretrainedModel.from_pretrained(pretrained_model_name,index_root=index_path)
-          print(f"Model dosyası bulunamadı, {pretrained_model_name} index oluşturuluyor...")
-          RAG.index(
-            collection=full_document,
-            document_ids=document_ids,
-            document_metadatas=metadata,
-            index_name=index_name,
-            max_document_length=data.get("max_document_length"),
-            use_faiss=True,
-            split_documents=False,
-          )
+            RAG = RAGPretrainedModel.from_pretrained(
+                pretrained_model_name, index_root=index_path
+            )
+            print(
+                f"Model dosyası bulunamadı, {pretrained_model_name} index oluşturuluyor..."
+            )
+            RAG.index(
+                collection=full_document,
+                document_ids=document_ids,
+                document_metadatas=metadata,
+                index_name=index_name,
+                # max_document_length=data.get("max_document_length"),
+                use_faiss=True,
+                split_documents=True,  # Belgeleri otomatik olarak parçalara ayır
+                max_document_length=512,  # Her parçanın maksimum token sayısı
+            )
 
         # Update the model cache with the latest model after modification
         model_cache.update_model(index_name)
-        
+
         return index_name
 
-    except (Exception) as e:
+    except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 
@@ -158,25 +170,29 @@ def search_rag():
         # print("QueryRequest object:", query_request)
 
         # Sorguyu böl ve RAG modelinde ara
-        queries = data.get("query").split('|')
+        queries = data.get("query").split("|")
         print("QueryRequest queries:", queries)
         rag = model_cache.get_model(index_name, index_path)
         # rag = RAGPretrainedModel.from_index(index_path+"/colbert/indexes/"+index_name)
         try:
-          docs = rag.search(query=queries, index_name=index_name)
-          print("doc",docs)
-          if data.get("rerank"):
-              print("rerank")
-              docs = rag.rerank(query=queries, documents=[doc['content'] for doc in docs], k=data.get("k") or 5)
-              print("rerankink docs",docs)
+            docs = rag.search(query=queries, index_name=index_name)
+            print("doc", docs)
+            if data.get("rerank"):
+                print("rerank")
+                docs = rag.rerank(
+                    query=queries,
+                    documents=[doc["content"] for doc in docs],
+                    k=data.get("k") or 5,
+                )
+                print("rerankink docs", docs)
 
-          return jsonify({"result": docs})
+            return jsonify({"result": docs})
         except Exception as e:
-          return jsonify({"result": []})
+            return jsonify({"result": []})
 
-
-    except Exception  as e:
+    except Exception as e:
         return jsonify({"error": str(e)}), 400
+
 
 @app.route("/delete", methods=["POST"])
 def delete_rag():
@@ -185,28 +201,30 @@ def delete_rag():
         data = request.json
         if not data.get("deleted_document_id"):
             raise ValueError("deleted_document_id field is required.")
-        
+
         if not data.get("index_name"):
-            raise ValueError("index_name field is required.")  
-          
+            raise ValueError("index_name field is required.")
+
         deleted_document_id = data.get("deleted_document_id")
-        index_name = data.get("index_name")  
-        print("deleted_document_id",deleted_document_id)
-        if os.path.exists(index_path+"/colbert/indexes/"+index_name):
-          RAG = model_cache.get_model(index_name, index_path)
-          
-          # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
-            
-          RAG.delete_from_index(deleted_document_id,index_name)
-          model_cache.update_model(index_name)
-          return jsonify({"result": "ok"})
+        index_name = data.get("index_name")
+        print("deleted_document_id", deleted_document_id)
+        if os.path.exists(index_path + "/colbert/indexes/" + index_name + "/plan.json"):
+            RAG = model_cache.get_model(index_name, index_path)
+
+            # RAG = RAGPretrainedModel.from_index(index_path + "/colbert/indexes/" + index_name)
+            print(f"Modeldeki {deleted_document_id} ids siliniyor...")
+            print(f"Modeldeki {index_name} index_name siliniyor...")
+            RAG.delete_from_index(deleted_document_id, index_name)
+            model_cache.update_model(index_name)
+            return jsonify({"result": "ok"})
 
         return jsonify({"result": "false"})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+
 # Start the Flask server in a new thread
 if __name__ == "__main__":
     # threading.Thread(target=app.run, kwargs={"use_reloader": False, "debug": True}).start()
-    app.run(host="0.0.0.0",port=os.getenv("PORT"))
+    app.run(host="0.0.0.0", port=os.getenv("PORT"))
